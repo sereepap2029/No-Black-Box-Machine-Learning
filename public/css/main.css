@@ -1,0 +1,21 @@
+body{
+    background-color: black;
+}
+
+
+.bg-darkblue{
+    background-color: rgb(33, 33, 61);
+
+}
+.bg-darkblue:focus{
+    background-color: rgb(33, 33, 61);
+
+}
+.pc_value{
+    color: white;
+    text-align: end;
+}
+.picgen{
+    height: 100%;
+    width: 100%;
+}
