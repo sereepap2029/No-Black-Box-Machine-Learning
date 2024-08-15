@@ -13,9 +13,7 @@ const KnexSessionStore = require("connect-session-knex")(session);
 require("dotenv").config();
 process.env.TZ = process.env.TIME_ZONE;
 
-// Routes import
 
-const routeHome = require("./routes/home.js");
 
 const app = express();
 //setup views EJS
@@ -32,6 +30,8 @@ app.use(
   express.static(path.resolve("node_modules", "bootstrap", "dist", "js"))
 );
 app.use("/js", express.static(path.resolve("node_modules", "jquery", "dist")));
+app.use("/js", express.static(path.resolve("node_modules", "axios", "dist")));
+app.use("/assets/sweetalert2", express.static(path.resolve("node_modules", "sweetalert2", "dist")));
 app.use("/", express.static(path.resolve("public")));
 app.use("/css", express.static(path.resolve("public/css")));
 app.use("/js", express.static(path.resolve("public/js")));
@@ -68,7 +68,12 @@ app.use(
   })
 );
 
+// Routes import
+const routeHome = require("./routes/home.js");
+const routeAPI = require("./routes/api.js");
+
 app.use("/", routeHome);
+app.use("/api", routeAPI);
 
 
 // debug region

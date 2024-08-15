@@ -1,16 +1,66 @@
 <%- include('global/v_meta'); -%>
 <%- include('global/v_header'); -%>
-    <div id="content" class="">
-        <h1>Data Creator</h1>
-        <br />
-        <div id="sketchPadContainer" class="">
+<div id="content" class="">
+  <h1>Data Creator</h1>
+  <br />
+  <div>
+    <input id="student" type="text" placeholder="type your name">
+    <span id="instructions"></span>
+    <button id="advanceBtn" onclick="start()">START</button>
+  </div>
+  <br />
+  <div id="sketchPadContainer" class="" style="visibility: hidden;">
 
-        </div>
-    </div>
-    <script type="text/javascript" src="/js/draw.js"></script>
-    <script type="text/javascript" src="/js/sketchpad.js"></script>
-    <script>
-        const sketchpad = new SketchPad(sketchPadContainer)
-    </script>
+  </div>
+</div>
+<script type="text/javascript" src="/js/draw.js"></script>
+<script type="text/javascript" src="/js/sketchpad.js"></script>
+<script>
+  let index = 0;
+  const labels=["car","fish","house","tree","bicycle","guitar","pencil","clock"]
+  let data = {
+    student: null,
+    session: new Date().getTime(),
+    drawings: {}
+  }
+  const sketchpad = new SketchPad(sketchPadContainer)
+
+  function start() {
+    if (student.value == "") {
+      alert("please type your name first")
+      return
+    }
+    data.student = student.value
+    student.style.display = "none"
+    sketchPadContainer.style.visibility = "visible"
+    const label=labels[index];
+    instructions.innerHTML="Please draw a "+label
+    advanceBtn.innerHTML="NEXT"
+    advanceBtn.onclick=next
+  }
+  function next(){
+    if(sketchpad.paths.length==0){
+        alert("Draw something first")
+        return
+    }
+    let label=labels[index];
+    data.drawings[label]=sketchpad.paths
+    sketchpad.reset();
+    index+=1;
+    if(!labels[index]){
+        sketchPadContainer.style.visibility = "hidden"
+        instructions.innerHTML="Thank you"
+        advanceBtn.innerHTML="Save"
+        advanceBtn.onclick=saveDat
+        return
+    }
+    let nextLabel=labels[index];
+    instructions.innerHTML="Please draw a "+nextLabel
+  }
+  function saveDat(){
+    advanceBtn.style.display="none"
+    save(data);
+  }
+</script>
 
 <%- include('global/v_footer'); -%>

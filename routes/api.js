@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 //const authorize = require("../middleware/auth.js");
-const home = require("../controllers/home.js");
+const api = require("../controllers/api.js");
 //router.use("/auth", authorize);
 
-router.get("/", home.home);
-router.get("/process", home.process);
-router.get("/viewer", home.viewer);
+router.post("/save", api.saveData);
+router.post("/datagen", api.dataGen);
+
 
 module.exports = router;
