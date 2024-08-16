@@ -6,6 +6,7 @@ const api = require("../controllers/api.js");
 
 router.post("/save", api.saveData);
 router.post("/datagen", api.dataGen);
+router.post("/featureextractor", api.featureExtractor);
 
 
 module.exports = router;

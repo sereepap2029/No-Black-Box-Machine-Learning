@@ -1,9 +1,6 @@
 <%- include('global/v_meta'); -%>
 <%- include('global/v_header'); -%>
-<script>  
-    let samples=<%-data-%>
-</script>
-<div id="content" class="">
+<div id="" class="">
   <h1>Data Viewer</h1>
   <br />
   <div id="container">
@@ -12,7 +9,15 @@
   <br />
 </div>
 <script type="text/javascript" src="/js/samples.js"></script>
-<script>  
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript" src="/js/display.js"></script>
+<script>
+  const groups = utils.groupBy(samples, "student_id")
+  for (let student_id in groups){
+    let sample = groups[student_id]
+    let studentName=sample[0].student_name;
+    createRow(container,studentName,sample);
+  }
 </script>
 
 <%- include('global/v_footer'); -%>

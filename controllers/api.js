@@ -8,6 +8,7 @@ const utils = require("../models/utils.js");
 const fs = require("fs");
 const { generateKey } = require("crypto");
 const draw = require("../public/js/draw.js");
+const features = require("../public/js/features.js");
 const { createCanvas } = require("canvas");
 
 var exp = {};
@@ -60,4 +61,19 @@ function generateImageFile({ outFile, paths, ctx, canvas } = {}) {
   fs.writeFileSync(outFile, buffer);
 }
 
+exp.featureExtractor = (req, res) => {
+  console.log("extract features")
+  const samples_raw = fs.readFileSync(constants.SAMPLES)
+  const samples = JSON.parse(samples_raw)
+  for(let sample of samples){
+    const paths =JSON.parse(fs.readFileSync(constants.JSON_DIR+"/"+sample.id+".json"))
+    sample.point=[
+      features.getPathCount(paths),
+      features.getPointCount(paths),
+    ]
+  }
+  const featureNames=["Path Count","Point Count"];
+  fs.writeFileSync(constants.FEATURES, JSON.stringify(featureNames,samples));
+  return res.status(200).json({ status: "success", msg: "" });
+}
 module.exports = exp;
