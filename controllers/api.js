@@ -73,7 +73,15 @@ exp.featureExtractor = (req, res) => {
     ]
   }
   const featureNames=["Path Count","Point Count"];
-  fs.writeFileSync(constants.FEATURES, JSON.stringify(featureNames,samples));
+  fs.writeFileSync(constants.FEATURES, JSON.stringify({
+    featureNames,
+    samples:samples.map(s=>{
+      return {
+        point:s.point,
+        label:s.label,
+      }
+    })
+  }));
   return res.status(200).json({ status: "success", msg: "" });
 }
 module.exports = exp;
