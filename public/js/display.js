@@ -17,7 +17,7 @@ function createRow(container, studentName, samples) {
     const img = document.createElement("img");
     img.src = "/media/dataset/img/" + id + ".png";
     img.classList.add("display-thumb");
-    if(util.flaggedUsers.includes(student_id)){
+    if(utils.flaggedUsers.includes(student_id)){
         img.classList.add("blur");
     }
     imgCon.appendChild(img);
